@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MCQ Exam</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>MCQ Exam</h1>
+    <div id="timer">Time left: <span id="time">00:00</span></div>
+    <div id="quiz-container">
+        <div id="question-container"></div>
+        <button id="prev-btn" onclick="prevQuestion()">Previous</button>
+        <button id="next-btn" onclick="nextQuestion()">Next</button>
+        <button id="submit-btn" onclick="submitQuiz()">Submit</button>
+    </div>
+    <div id="result-container" style="display: none;">
+        <h2>Results</h2>
+        <p id="score"></p>
+        <div id="results-details"></div>
+        <button onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+    <script>
+        let currentQuestionIndex = 0;
+        let questions = [];
+        let answers = {};
+        let totalTime = 0;
+        let timerInterval;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/questions')
+                .then(response => response.json())
+                .then(data => {
+                    questions = data;
+                    totalTime = questions.length * 60; // 1 minute per question
+                    displayQuestion();
+                    updateButtons();
+                    startTimer();
+                });
+        });
+
+        function displayQuestion() {
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.innerHTML = '';
+            const question = questions[currentQuestionIndex];
+            
+            const questionElement = document.createElement('div');
+            questionElement.classList.add('question');
+
+            const questionNumber = document.createElement('h2');
+            questionNumber.textContent = `Question ${question.id}`;
+            questionElement.appendChild(questionNumber);
+
+            const questionText = document.createElement('p');
+            questionText.textContent = question.question;
+            questionElement.appendChild(questionText);
+
+            const options = ['a', 'b', 'c', 'd'];
+            question.options.forEach((option, index) => {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `question${question.id}`;
+                radio.value = option;
+                radio.checked = answers[question.id] === option;
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(`${options[index]}. ${option}`));
+                questionElement.appendChild(label);
+                questionElement.appendChild(document.createElement('br'));
+            });
+
+            questionContainer.appendChild(questionElement);
+        }
+
+        function updateButtons() {
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').disabled = currentQuestionIndex === questions.length - 1;
+            document.getElementById('submit-btn').style.display = currentQuestionIndex === questions.length - 1 ? 'inline' : 'none';
+        }
+
+        function prevQuestion() {
+            saveAnswer();
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+                updateButtons();
+            }
+        }
+
+        function nextQuestion() {
+            saveAnswer();
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+                updateButtons();
+            }
+        }
+
+        function saveAnswer() {
+            const selectedOption = document.querySelector(`input[name="question${questions[currentQuestionIndex].id}"]:checked`);
+            if (selectedOption) {
+                answers[questions[currentQuestionIndex].id] = selectedOption.value;
+            }
+        }
+
+        function submitQuiz() {
+            saveAnswer();
+            clearInterval(timerInterval);
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ answers })
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayResults(data);
+            });
+        }
+
+        function displayResults(data) {
+            document.getElementById('quiz-container').style.display = 'none';
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+
+            const scoreElement = document.getElementById('score');
+            scoreElement.textContent = `You scored ${data.score} out of ${data.total}`;
+
+            const resultsDetails = document.getElementById('results-details');
+            resultsDetails.innerHTML = '';
+            data.results.forEach((result, index) => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                
+                const questionText = document.createElement('p');
+                questionText.textContent = `Q${index + 1}: ${result.question}`;
+                resultItem.appendChild(questionText);
+
+                const givenAnswer = document.createElement('p');
+                givenAnswer.textContent = `Your answer: ${result.given_answer}`;
+                resultItem.appendChild(givenAnswer);
+
+                const correctAnswer = document.createElement('p');
+                correctAnswer.textContent = `Correct answer: ${result.correct_answer}`;
+                resultItem.appendChild(correctAnswer);
+
+                resultsDetails.appendChild(resultItem);
+            });
+        }
+
+        function startTimer() {
+            let timerElement = document.getElementById('time');
+            timerInterval = setInterval(() => {
+                let minutes = Math.floor(totalTime / 60);
+                let seconds = totalTime % 60;
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (totalTime <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz();
+                } else {
+                    totalTime--;
+                }
+            }, 1000);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            answers = {};
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            totalTime = questions.length * 60;
+            displayQuestion();
+            updateButtons();
+            startTimer();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "question": "What is the capital of France?",
+        "options": ["Berlin", "London", "Paris", "Rome"],
+        "answer": "Paris"
+    },
+    {
+        "id": 2,
+        "question": "Who wrote 'Hamlet'?",
+        "options": ["Charles Dickens", "Leo Tolstoy", "Mark Twain", "William Shakespeare"],
+        "answer": "William Shakespeare"
+    },
+    {
+        "id": 3,
+        "question": "What is the largest planet in our solar system?",
+        "options": ["Earth", "Jupiter", "Mars", "Saturn"],
+        "answer": "Jupiter"
+    },
+    {
+        "id": 4,
+        "question": "What is the boiling point of water?",
+        "options": ["90°C", "100°C", "110°C", "120°C"],
+        "answer": "100°C"
+    },
+    {
+        "id": 5,
+        "question": "What is the smallest prime number?",
+        "options": ["0", "1", "2", "3"],
+        "answer": "2"
+    },
+    {
+        "id": 6,
+        "question": "What is the chemical symbol for gold?",
+        "options": ["Ag", "Au", "Pb", "Pt"],
+        "answer": "Au"
+    },
+    {
+        "id": 7,
+        "question": "What is the square root of 64?",
+        "options": ["6", "7", "8", "9"],
+        "answer": "8"
+    },
+    {
+        "id": 8,
+        "question": "Who painted the Mona Lisa?",
+        "options": ["Pablo Picasso", "Leonardo da Vinci", "Vincent van Gogh", "Claude Monet"],
+        "answer": "Leonardo da Vinci"
+    },
+    {
+        "id": 9,
+        "question": "What is the currency of Japan?",
+        "options": ["Dollar", "Euro", "Pound", "Yen"],
+        "answer": "Yen"
+    },
+    {
+        "id": 10,
+        "question": "What is the speed of light?",
+        "options": ["300,000 km/s", "150,000 km/s", "100,000 km/s", "200,000 km/s"],
+        "answer": "300,000 km/s"
+    },
+    {
+        "id": 11,
+        "question": "Who discovered penicillin?",
+        "options": ["Marie Curie", "Alexander Fleming", "Isaac Newton", "Albert Einstein"],
+        "answer": "Alexander Fleming"
+    },
+    {
+        "id": 12,
+        "question": "Which planet is known as the Red Planet?",
+        "options": ["Earth", "Venus", "Mars", "Jupiter"],
+        "answer": "Mars"
+    },
+    {
+        "id": 13,
+        "question": "What is the tallest mountain in the world?",
+        "options": ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"],
+        "answer": "Mount Everest"
+    },
+    {
+        "id": 14,
+        "question": "Who is the author of 'Pride and Prejudice'?",
+        "options": ["Jane Austen", "Charles Dickens", "George Eliot", "Mark Twain"],
+        "answer": "Jane Austen"
+    },
+    {
+        "id": 15,
+        "question": "What is the hardest natural substance on Earth?",
+        "options": ["Gold", "Iron", "Diamond", "Platinum"],
+        "answer": "Diamond"
+    },
+    {
+        "id": 16,
+        "question": "What is the largest ocean on Earth?",
+        "options": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+        "answer": "Pacific Ocean"
+    },
+    {
+        "id": 17,
+        "question": "Who developed the theory of relativity?",
+        "options": ["Isaac Newton", "Galileo Galilei", "Albert Einstein", "Niels Bohr"],
+        "answer": "Albert Einstein"
+    },
+    {
+        "id": 18,
+        "question": "What is the capital of Australia?",
+        "options": ["Sydney", "Melbourne", "Canberra", "Perth"],
+        "answer": "Canberra"
+    },
+    {
+        "id": 19,
+        "question": "Which element has the chemical symbol 'O'?",
+        "options": ["Osmium", "Oxygen", "Gold", "Oganesson"],
+        "answer": "Oxygen"
+    },
+    {
+        "id": 20,
+        "question": "What is the largest continent by area?",
+        "options": ["Africa", "Asia", "Europe", "North America"],
+        "answer": "Asia"
+    }
+]
